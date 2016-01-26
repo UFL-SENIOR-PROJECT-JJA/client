@@ -26,7 +26,7 @@ Connection.Socket.prototype.preload = function () {
   Connection["socket"] = this.socket;
   this.socket.name = prompt("Enter your name");
   this.socket.emit('onLogin', this.socket.name);
-
+  console.log("You've logged in as: " + this.socket.name);
 };
 
 
@@ -37,7 +37,6 @@ Connection.Socket.prototype.onMove = function(x, y, dir) {
     y: y,
     dir: dir
   };
-  console.log(data.y);
   Connection["socket"].emit('onMove', data);
 };
 

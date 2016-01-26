@@ -108,7 +108,7 @@ Platformer.TiledState.prototype.create_server_objects = function (type, data, ti
     "use strict";
     var position, prefab;
     // tiled coordinates starts in the bottom left corner
-    position = {"x": 37, "y": 270};
+    position = {"x": data.x, "y": data.y};
     // create object according to its type
     /*"bouncing":"20",
     "group":"players",
@@ -121,33 +121,40 @@ Platformer.TiledState.prototype.create_server_objects = function (type, data, ti
     jumping_speed:"500",
     texture:"player_spritesheet",
     walking_speed:"200"};
-    console.log(this);
     prefab = new Platformer.OtherPlayer(tilemap, position, properties, data.name);
-    console.log(data.name);
     tilemap.prefabs[data.name] = prefab;
 };
 Platformer.TiledState.prototype.getOnlinePlayers = function (tilemap) {
-  this.tilemap = tilemap;
-  Connection['socket'].on('onPlayerConnect', function(data) {
-    console.log(data);
-    //we need to have a player connect...
-    //To connect, a player will start their game, send notification to server, server notifies every other player
-    //Clients create prefab for otherPlayer indexed by player name, when otherPlayer moves, server sends emission with player name,
-    //other player object is called and updates players position
-    console.log("This is shit");
-    console.log(data)
-    if(data.name != null) {
-      Platformer.TiledState.prototype.create_server_objects("other_player", data, tilemap);
-      var name = data.name;
-    }
-    console.log(tilemap.prefabs);
-  });
-  Connection['socket'].on('onOtherPlayerMove', function(data) {
-    console.log(data);
-    prefabs = Platformer.TiledState.prototype.tilemap.prefabs;
-    prefabs[data.name].move(data.x, data.y, data.dir);
+    this.tilemap = tilemap;
+    Connection['socket'].emit('requestUsers', Connection['socket'].name);
 
-  });
+    Connection['socket'].on('onPlayerConnect', function(data) {
+        //we need to have a player connect...
+        //To connect, a player will start their game, send notification to server, server notifies every other player
+        //Clients create prefab for otherPlayer indexed by player name, when otherPlayer moves, server sends emission with player name,
+        //other player object is called and updates players position
+        console.log(data);
+        if(data.name != null) {
+          Platformer.TiledState.prototype.create_server_objects("other_player", data, tilemap);
+          var name = data.name;
+
+        }
+        console.log(data.name + " Connected");
+
+    });
+    Connection['socket'].on('onOtherPlayerMove', function(data) {
+        prefabs = Platformer.TiledState.prototype.tilemap.prefabs;
+        prefabs[data.name].move(data.x, data.y, data.dir);
+
+    });
+    Connection['socket'].on('onPlayerDisconnect', function(data) {
+        console.log(data.name + " Disconnected");
+        prefabs = Platformer.TiledState.prototype.tilemap.prefabs;
+        prefabs[data.name].body = null;
+        prefabs[data.name].destroy();
+        delete prefabs[data.name];
+
+    });
 };
 
 
