@@ -25,7 +25,7 @@ Connection.Socket.prototype.preload = function () {
   this.socket = io('192.168.0.13:3000');
   console.log(this.socket.id);
   Connection.socket = this.socket;
-  this.socket.name = prompt("Enter your name");
+  this.socket.name = username;
   this.socket.emit('onLogin', this.socket.name, function (data){
       console.log("recieved call back from login " + data.id);
       Connection.socket.id = data.id;
@@ -48,5 +48,6 @@ Connection.Socket.prototype.onMove = function(x, y, dir) {
 
 Connection.Socket.prototype.create = function () {
     "use strict";
-    this.game.state.start("GameState", true, false, this.level_data);
+    this.game.state.start("MenuState", true, false);
 };
+//this.level_data

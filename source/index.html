@@ -4,17 +4,34 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-		<title>Learn Game Development at ZENVA.com</title>
+		<title></title>
+		<script>
+			var username = prompt("Enter a Username");
+			//var loginBox = document.getElementById("login");
+			//loginBox.appendChild(document.createElement('input'));
+		</script>
 		<script src="http://192.168.0.13:3000/socket.io/socket.io.js"></script>
 		<script type="text/javascript" src="js/phaser.js"></script>
 
+		<script src="js/states/InitalState.js"></script>
+
+		<script src="js/states/ConnectionState.js"></script>
+
+        <script src="js/states/MenuState.js"></script>
+
+
+		<script src="js/states/CreateGameState.js"></script>
+		<script src="js/states/JoinGameState.js"></script>
+
+		<script src="js/states/LobbyState.js"></script>
+
         <script src="js/states/BootState.js"></script>
         <script src="js/states/LoadingState.js"></script>
+
         <script src="js/states/TiledState.js"></script>
-				<script src="js/states/ConnectionState.js"></script>
         <script src="js/prefabs/Prefab.js"></script>
         <script src="js/prefabs/Player.js"></script>
-				<script src="js/prefabs/OtherPlayer.js"></script>
+		<script src="js/prefabs/OtherPlayer.js"></script>
         <script src="js/prefabs/Enemy.js"></script>
         <script src="js/prefabs/FlyingEnemy.js"></script>
         <script src="js/prefabs/Goal.js"></script>
@@ -31,5 +48,9 @@
 	</head>
 
 	<body>
+		<!--<div id="login">
+			<input id="loginID" type="text"> </input>
+			<input id="password" type="password"> </input>
+		</div>-->
 	</body>
 </html>

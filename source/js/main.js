@@ -1,10 +1,26 @@
 var Phaser = Phaser || {};
 var Platformer = Platformer || {};
 
-var game = new Phaser.Game("100%", "100%", Phaser.CANVAS);
+var game = new Phaser.Game(800, 480, Phaser.AUTO);
+
+//Preload everything!
+game.state.add("InitalState", new Platformer.InitalState());
+
+//Connect to the server
+game.state.add("ConnectionState", new Connection.Socket());
+
+
+//login with credentials
+game.state.add("MenuState", new Platformer.MenuState());
+game.state.add("CreateGameState", new Platformer.CreateGameState());
+
+
+//offer the menu
+// /game.state.add("MenuState", new Platformer.MenuState());
+
 
 game.state.add("BootState", new Platformer.BootState());
 game.state.add("LoadingState", new Platformer.LoadingState());
 game.state.add("GameState", new Platformer.TiledState());
-game.state.add("ConnectionState", new Connection.Socket());
-game.state.start("BootState", true, false, "assets/levels/level1.json");
+game.state.start("InitalState", true, false);
+//"assets/levels/level1.json"
