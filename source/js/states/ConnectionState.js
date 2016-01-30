@@ -23,21 +23,27 @@ Connection.Socket.prototype.init = function (level_data) {
 Connection.Socket.prototype.preload = function () {
   console.log("Connection Created");
   this.socket = io('192.168.0.13:3000');
-  Connection["socket"] = this.socket;
+  console.log(this.socket.id);
+  Connection.socket = this.socket;
   this.socket.name = prompt("Enter your name");
-  this.socket.emit('onLogin', this.socket.name);
+  this.socket.emit('onLogin', this.socket.name, function (data){
+      console.log("recieved call back from login " + data.id);
+      Connection.socket.id = data.id;
+      Connection.socket.emit('requestUsers', Connection.socket.id);
+  });
   console.log("You've logged in as: " + this.socket.name);
 };
 
 
 Connection.Socket.prototype.onMove = function(x, y, dir) {
   var data = {
-    name: Connection["socket"].name,
+    id: Connection.socket.ID,
+    name: Connection.socket.name,
     x: x,
     y: y,
     dir: dir
   };
-  Connection["socket"].emit('onMove', data);
+  Connection.socket.emit('onMove', data);
 };
 
 Connection.Socket.prototype.create = function () {

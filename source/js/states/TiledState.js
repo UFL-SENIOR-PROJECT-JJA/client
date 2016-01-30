@@ -126,7 +126,7 @@ Platformer.TiledState.prototype.create_server_objects = function (type, data, ti
 };
 Platformer.TiledState.prototype.getOnlinePlayers = function (tilemap) {
     this.tilemap = tilemap;
-    Connection['socket'].emit('requestUsers', Connection['socket'].name);
+
 
     Connection['socket'].on('onPlayerConnect', function(data) {
         //we need to have a player connect...
