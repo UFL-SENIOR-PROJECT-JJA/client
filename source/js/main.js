@@ -13,6 +13,10 @@ game.state.add("ConnectionState", new Connection.Socket());
 //login with credentials
 game.state.add("MenuState", new Platformer.MenuState());
 game.state.add("CreateGameState", new Platformer.CreateGameState());
+game.state.add("JoinGameState", new Platformer.JoinGameState());
+
+//LobbyState
+game.state.add("LobbyState", new Platformer.LobbyState());
 
 
 //offer the menu
