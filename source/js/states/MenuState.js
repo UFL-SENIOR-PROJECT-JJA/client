@@ -24,11 +24,15 @@ Platformer.MenuState.prototype.create = function () {
     this.background.autoScroll(-20, 0);
     console.log(this.game);
     var createGame = this.game.add.button(this.game.width/2 - (192/2), this.game.height/2 - (42/2) - 45, 'createGame', onClickCreateGame, this, 1, 0, 2);
-    var createGame = this.game.add.button(this.game.width/2 - (192/2), this.game.height/2 - (42/2) + 45, 'createGame', actionOnClick, this, 1, 0, 2);
+    var createGame = this.game.add.button(this.game.width/2 - (192/2), this.game.height/2 - (42/2) + 45, 'createGame', onClickJoinGame, this, 1, 0, 2);
 
 
 };
 
 var onClickCreateGame = function() {
     this.game.state.start("CreateGameState", true, false);
-}
+};
+
+var onClickJoinGame = function() {
+    this.game.state.start("JoinGameState", true, false);
+};

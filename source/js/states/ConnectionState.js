@@ -46,6 +46,15 @@ Connection.Socket.prototype.onMove = function(x, y, dir) {
   Connection.socket.emit('onMove', data);
 };
 
+Connection.Socket.prototype.onCreateLobby = function(name, mapID, numPlayers, joinLobby) {
+    data = {
+        name: name,
+        mapID: mapID,
+        numPlayers: numPlayers
+    };
+    Connection.socket.emit('createLobby', data, joinLobby);
+};
+
 Connection.Socket.prototype.create = function () {
     "use strict";
     this.game.state.start("MenuState", true, false);
