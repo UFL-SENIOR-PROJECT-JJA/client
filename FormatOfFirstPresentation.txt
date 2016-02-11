@@ -1,0 +1,9 @@
+slide 1: title slide
+slide 2: overview
+	-what?
+	-why?
+	-how?
+	(each of the above 2-3 bullet points each)
+slide 3: Project schedule
+slide 4: Lit. sources
+slide 5: work perfromed + challeneges/solution 
