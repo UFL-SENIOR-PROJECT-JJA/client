@@ -39,5 +39,5 @@ Platformer.LoadingState.prototype.preload = function () {
 Platformer.LoadingState.prototype.create = function () {
     "use strict";
     console.log("Loading State Created");
-    this.game.state.start("ConnectionState", true, false, this.level_data);
+    this.game.state.start("GameState", true, false, this.level_data);
 };
