@@ -14,7 +14,10 @@ Platformer.LobbyState.prototype.init = function () {
     //Connection['socket'].emit('requestForLobbies');
     Connection['socket'].on('lobby', function(lobbies){
         console.log("this is a private message");
-    });};
+    });
+    this.game.state.start("BootState", true, false, "assets/levels/level1.json");
+
+};
 
 Platformer.LobbyState.prototype.preload = function () {
 

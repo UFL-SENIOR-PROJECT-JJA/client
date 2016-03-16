@@ -25,6 +25,10 @@ Platformer.JoinGameState.prototype.create = function () {
     this.background.autoScroll(-20, 0);
     //Buttons.add(this.game.add.button(this.game.width/2 - (192/2), this.game.height/2 - (42/2) - 45, 'createGame', onClickCreateLobby, this, 1, 0, 2));
     //this.game.state.start("LobbyState", true, false);
+    Platformer["joinLobby"] = this;
+    console.log("Join Lobby This");
+    console.log(this);
+
 };
 
 Platformer.JoinGameState.prototype.startListening = function(){
@@ -48,6 +52,12 @@ var reloadLobbies = function(lobbies){
     }
 
 };
+var joinLobbyState = function () {
+        //move to lobby state after callback is recieved
+        console.log("joinLobbyState Method");
+        Platformer["joinLobby"].game.state.start("LobbyState", true, false);
+};
+
 
 var onClickJoinLobby = function() {
     console.log('clicked');
@@ -58,6 +68,7 @@ var makeLobbyButton = function(lobbyID) {
     var button = {
         buttonFunction: function () {
             console.log(lobbyID);
+            Connection.socket.emit('playerJoinLobby', lobbyID, joinLobbyState);
         },
         buttonObject: null
     };
