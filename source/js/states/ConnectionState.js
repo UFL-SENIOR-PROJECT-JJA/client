@@ -22,7 +22,7 @@ Connection.Socket.prototype.init = function (level_data) {
 
 Connection.Socket.prototype.preload = function () {
   console.log("Connection Created");
-  this.socket = io('192.168.0.13:3000');
+  this.socket = io('http://localhost:3000');
   console.log(this.socket.id);
   Connection.socket = this.socket;
   this.socket.name = username;

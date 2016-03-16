@@ -13,6 +13,8 @@ Platformer.Player = function (game_state, position, properties) {
     this.body.collideWorldBounds = true;
     this.body.immovable = true;
 
+    this.direction;
+
 
 
     this.animations.add("walking", [0, 1, 2, 1], 6, true);
@@ -36,6 +38,7 @@ Platformer.Player.prototype.update = function () {
 
     if (this.cursors.right.isDown && this.body.velocity.x >= 0) {
         // move right
+        this.direction = 'right';
         this.body.velocity.x = this.walking_speed;
         this.animations.play("walking");
         this.scale.setTo(-1, 1);
@@ -43,6 +46,7 @@ Platformer.Player.prototype.update = function () {
 
     } else if (this.cursors.left.isDown && this.body.velocity.x <= 0) {
         // move left
+        this.direction = 'left';
         this.body.velocity.x = -this.walking_speed;
         this.animations.play("walking");
         this.scale.setTo(1, 1);
@@ -75,7 +79,28 @@ Platformer.Player.prototype.update = function () {
     if (this.bottom >= this.game_state.game.world.height) {
         this.game_state.restart_level();
     }
+
+    //allow the player to attack using spacebar
+    if(this.cursors.spacebar.isDown){
+      //do attack
+      create_bullet(this.direction);
+
+    }
 };
+
+Platformer.Player.create_bullet = function(direction){
+  var bullet;
+  if(direction === 'right'){
+    bullet = bullets.create(this.body.x + this.body.width/2 + 20, this.body.height/2 - 8, 'bullet');
+    bullet.body.velocity.x = 400;
+  }else{
+    bullet = bullets.create(this.body.x + this.body.width/2 - 20, this.body.height/2 - 8, 'bullet');
+    bullet.body.velcity.x = -400;
+  }
+
+  bullet.anchor.setTo(0.5, 0.5);
+  bullet.body.velocity.y = 0;
+}
 
 Platformer.Player.prototype.hit_enemy = function (player, enemy) {
     "use strict";
