@@ -1,7 +1,7 @@
 var Phaser = Phaser || {};
 var Platformer = Platformer || {};
 
-var game = new Phaser.Game(800, 480, Phaser.AUTO);
+var game = new Phaser.Game(800, 500, Phaser.AUTO);
 
 //Preload everything!
 game.state.add("InitalState", new Platformer.InitalState());

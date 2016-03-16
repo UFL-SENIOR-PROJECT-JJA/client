@@ -11,6 +11,10 @@ Platformer.prototype.constructor = Platformer.InitalState;
 
 Platformer.InitalState.prototype.init = function () {
     "use strict";
+    this.game.stage.disableVisibilityChange = true;
+    this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    this.scale.pageAlignHorizontally = true;
+    this.scale.pageAlignVertically = true;
 
 };
 
