@@ -64,9 +64,9 @@ Platformer.TiledState.prototype.create = function () {
     this.level_data.groups.forEach(function (group_name) {
         this.groups[group_name] = this.game.add.group();
     }, this);
-    this.groups[bullets] = this.game.add.group();
-    game.physics.enable(bullets, Phaser.Physics.ARCADE); //not sure if necessary
-    
+    this.groups['bullets'] = this.game.add.group();
+    game.physics.enable(this.groups['bullets'], Phaser.Physics.ARCADE); //not sure if necessary
+    Platformer.groups = this.groups;
 
     this.prefabs = {};
 

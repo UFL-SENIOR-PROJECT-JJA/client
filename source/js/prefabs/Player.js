@@ -4,7 +4,7 @@ var Connection = Connection || {};
 Platformer.Player = function (game_state, position, properties) {
     "use strict";
     Platformer.Prefab.call(this, game_state, position, properties);
-
+    this.spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     this.walking_speed = +properties.walking_speed;
     this.jumping_speed = +properties.jumping_speed;
     this.bouncing = +properties.bouncing;
@@ -18,6 +18,8 @@ Platformer.Player = function (game_state, position, properties) {
 
 
     this.animations.add("walking", [0, 1, 2, 1], 6, true);
+
+    this.timer = 0;
 
     //this.frame = 3;
 
@@ -81,23 +83,27 @@ Platformer.Player.prototype.update = function () {
     }
 
     //allow the player to attack using spacebar
-    if(this.cursors.spacebar.isDown){
+    if(this.spacebar.isDown && this.timer < game.time.now){
       //do attack
-      create_bullet(this.direction);
+      this.timer = game.time.now + 500;
+      this.create_bullet(this.direction);
 
     }
 };
 
-Platformer.Player.create_bullet = function(direction){
+Platformer.Player.prototype.create_bullet = function(direction){
   var bullet;
+  //console.log(Platformer);
   if(direction === 'right'){
-    bullet = bullets.create(this.body.x + this.body.width/2 + 20, this.body.height/2 - 8, 'bullet');
+    bullet = Platformer.groups['bullets'].create(this.body.x + this.body.width/2 + 5, this.y - 2, 'bullet');
+    game.physics.enable(bullet, Phaser.Physics.ARCADE);
     bullet.body.velocity.x = 400;
   }else{
-    bullet = bullets.create(this.body.x + this.body.width/2 - 20, this.body.height/2 - 8, 'bullet');
-    bullet.body.velcity.x = -400;
+    bullet = Platformer.groups['bullets'].create(this.body.x - this.body.width/2 - 5, this.y - 2, 'bullet');
+    game.physics.enable(bullet, Phaser.Physics.ARCADE);
+    bullet.body.velocity.x = -400;
   }
-
+  bullet.body.gravity.y = -1000;
   bullet.anchor.setTo(0.5, 0.5);
   bullet.body.velocity.y = 0;
 }
