@@ -22,7 +22,7 @@ Platformer.LobbyState.prototype.init = function (data) {
     this.lobbyUsers = [];
     this.lobbyUsers.push(data.owner);
 
-    //this.game.state.start("BootState", true, false, "assets/levels/level1.json");
+    this.game.state.start("BootState", true, false, "assets/levels/level1.json");
 
 };
 
