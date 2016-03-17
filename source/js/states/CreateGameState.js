@@ -45,9 +45,10 @@ Platformer.CreateGameState.prototype.create = function () {
     console.log(Platformer["createLobby"]);
 };
 
-var moveToLobbyState = function () {
+var moveToLobbyState = function (data) {
+        console.log(data);
         //move to lobby state after callback is recieved
-        Platformer["createLobby"].game.state.start("LobbyState", true, false);
+        Platformer["createLobby"].game.state.start("LobbyState", true, false, data);
 };
 
 var onClickCreateLobby = function() {
