@@ -12,7 +12,7 @@ Platformer.Player = function (game_state, position, properties) {
     this.game_state.game.physics.arcade.enable(this);
     this.body.collideWorldBounds = true;
     this.body.immovable = true;
-
+    this.lives = 3;
     this.direction;
 
 
@@ -94,7 +94,8 @@ Platformer.Player.prototype.update = function () {
 Platformer.Player.prototype.create_bullet = function(direction){
   var bullet;
   //console.log(Platformer);
-  Connection.Socket.prototype.alertBulletFired(this.x, this.y, this.direction);
+  var timeMade = game.time.now;
+  Connection.Socket.prototype.alertBulletFired(this.x, this.y, this.direction, timeMade);
   if(direction === 'right'){
     bullet = Platformer.groups['bullets'].create(this.x + this.body.width/2 + 16, this.y + 10, 'bullet');
     game.physics.enable(bullet, Phaser.Physics.ARCADE);
@@ -107,11 +108,21 @@ Platformer.Player.prototype.create_bullet = function(direction){
   bullet.body.gravity.y = -1000;
   bullet.anchor.setTo(0.5, 0.5);
   bullet.body.velocity.y = 0;
+
+  bullet.id = timeMade + Connection.socket.name;
+  console.log("bullet " + bullet.id + " has been fired");
 }
 
 Platformer.Player.prototype.bullet_hit_enemy = function (player, enemy) {
   "use strict";
-      //enemy.kill();
+  if(this.lives > 0){
+      enemy.kill();
+      console.log("the bullet id should be : " + enemy.id);
+      Connection.Socket.prototype.deleteBullet(enemy.id);
+    }else{
+      enemy.kill();
+      player.kill();
+    }
       //prompt("you died");
       console.log("A BULLET HIT ME, I AM DEAD X.X");
 }

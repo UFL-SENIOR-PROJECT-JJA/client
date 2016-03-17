@@ -160,11 +160,23 @@ Platformer.TiledState.prototype.getOnlinePlayers = function (tilemap) {
         game.physics.enable(bullet, Phaser.Physics.ARCADE);
         bullet.body.velocity.x = -400;
       }
+      bullet.id = data.uID;
       bullet.body.gravity.y = -1000;
       bullet.anchor.setTo(0.5, 0.5);
       bullet.body.velocity.y = 0;
 
     });
+    Connection['socket'].on('onDeleteBullet', function(data) {
+        for (var i = 0, len = Platformer.groups.bullets.children.length; i < len; i++) {
+          console.log("this is a bullet id xxx: " + Platformer.groups.bullets.children[i].id);
+          if(Platformer.groups.bullets.children[i].id === data.uID){
+            console.log("removing bullet with id " + data.uID);
+            //console.log(Platformer.groups.bullets.children[i]);
+            Platformer.groups.bullets.children[i].kill();
+          }
+        }
+    });
+
     Connection['socket'].on('onPlayerDisconnect', function(data) {
         console.log(data.name + " Disconnected");
         prefabs = Platformer.TiledState.prototype.tilemap.prefabs;
