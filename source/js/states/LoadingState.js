@@ -19,6 +19,7 @@ Platformer.LoadingState.prototype.preload = function () {
     var assets, asset_loader, asset_key, asset;
     assets = this.level_data.assets;
     this.load.image('bullet', "assets/images/bullet.png");
+    this.load.image('gravestone', "assets/images/grave_stone.png");
     for (asset_key in assets) { // load assets according to asset key
         if (assets.hasOwnProperty(asset_key)) {
             asset = assets[asset_key];

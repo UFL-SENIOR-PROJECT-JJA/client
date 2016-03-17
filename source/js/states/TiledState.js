@@ -76,6 +76,7 @@ Platformer.TiledState.prototype.create = function () {
             this.map.objects[object_layer].forEach(this.create_object, this);
         }
     }
+    Platformer.game = this.game;
     Platformer.TiledState.prototype.getOnlinePlayers(this);
 };
 
@@ -153,6 +154,12 @@ Platformer.TiledState.prototype.getOnlinePlayers = function (tilemap) {
 
     Connection['socket'].on('onUpdateLives', function(data) {
         prefabs[data.name].lives = data.numLives;
+        console.log("in tiled state the num lives = " + data.numLives);
+        if(data.numLives <= 0){
+          Platformer.game.add.sprite(prefabs[data.name].x, prefabs[data.name].y, 'gravestone');
+          prefabs[data.name].kill();
+
+        }
 
     });
 

@@ -115,18 +115,19 @@ Platformer.Player.prototype.create_bullet = function(direction){
 
 Platformer.Player.prototype.bullet_hit_enemy = function (player, enemy) {
   "use strict";
+  --this.lives;
   if(this.lives > 0){
       enemy.kill();
-      console.log("the bullet id should be : " + enemy.id);
+      console.log("the number of lives is " + this.lives);
       Connection.Socket.prototype.deleteBullet(enemy.id);
       Connection.Socket.prototype.updateLives(-1);
-      --this.lives;
     }else{
       enemy.kill();
       Connection.Socket.prototype.deleteBullet(enemy.id);
+      this.game_state.game.add.sprite(this.x,this.y, 'gravestone');
       player.kill();
       Connection.Socket.prototype.updateLives(-1);
-      --this.lives;
+
 
       //gives a signal that they have lose the game/ grey screen?
     }
