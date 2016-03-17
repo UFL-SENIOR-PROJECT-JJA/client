@@ -11,6 +11,8 @@ Platformer.OtherPlayer = function (game_state, position, properties, name) {
     this.jumping_speed = +properties.jumping_speed;
     this.bouncing = +properties.bouncing;
 
+    this.lives = 3;
+
     this.game_state.game.physics.arcade.enable(this);
     this.body.gravity.y = 0;
 

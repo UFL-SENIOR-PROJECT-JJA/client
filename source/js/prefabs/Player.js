@@ -119,9 +119,16 @@ Platformer.Player.prototype.bullet_hit_enemy = function (player, enemy) {
       enemy.kill();
       console.log("the bullet id should be : " + enemy.id);
       Connection.Socket.prototype.deleteBullet(enemy.id);
+      Connection.Socket.prototype.updateLives(-1);
+      --this.lives;
     }else{
       enemy.kill();
+      Connection.Socket.prototype.deleteBullet(enemy.id);
       player.kill();
+      Connection.Socket.prototype.updateLives(-1);
+      --this.lives;
+
+      //gives a signal that they have lose the game/ grey screen?
     }
       //prompt("you died");
       console.log("A BULLET HIT ME, I AM DEAD X.X");

@@ -150,6 +150,12 @@ Platformer.TiledState.prototype.getOnlinePlayers = function (tilemap) {
         prefabs[data.name].move(data.x, data.y, data.dir);
 
     });
+
+    Connection['socket'].on('onUpdateLives', function(data) {
+        prefabs[data.name].lives = data.numLives;
+
+    });
+
     Connection['socket'].on('onReceiveBullet', function(data) {
       if(data.dir === 'right'){
         bullet = Platformer.groups['bullets'].create(data.x + 16 + 16, data.y + 10, 'bullet');

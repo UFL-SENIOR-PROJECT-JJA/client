@@ -55,6 +55,16 @@ Connection.Socket.prototype.deleteBullet = function(uID) {
   Connection.socket.emit('removeRemoteBullet', data);
 };
 
+Connection.Socket.prototype.updateLives = function(numLives) {
+  console.log("i am here bloop");
+  var data = {
+    id: Connection.socket.ID,
+    name: Connection.socket.name,
+    numLives: numLives
+  };
+  Connection.socket.emit('updatePlayerLives', data);
+};
+
 Connection.Socket.prototype.onMove = function(x, y, dir) {
   var data = {
     id: Connection.socket.ID,
