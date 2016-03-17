@@ -112,6 +112,7 @@ Platformer.Player.prototype.create_bullet = function(direction){
 Platformer.Player.prototype.bullet_hit_enemy = function (player, enemy) {
   "use strict";
       //enemy.kill();
+      //prompt("you died");
       console.log("A BULLET HIT ME, I AM DEAD X.X");
 }
 

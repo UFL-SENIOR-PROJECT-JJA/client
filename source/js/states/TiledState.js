@@ -150,6 +150,21 @@ Platformer.TiledState.prototype.getOnlinePlayers = function (tilemap) {
         prefabs[data.name].move(data.x, data.y, data.dir);
 
     });
+    Connection['socket'].on('onReceiveBullet', function(data) {
+      if(data.dir === 'right'){
+        bullet = Platformer.groups['bullets'].create(data.x + 16 + 16, data.y + 10, 'bullet');
+        game.physics.enable(bullet, Phaser.Physics.ARCADE);
+        bullet.body.velocity.x = 400;
+      }else{
+        bullet = Platformer.groups['bullets'].create(data.x - 16 - 16, data.y + 10, 'bullet');
+        game.physics.enable(bullet, Phaser.Physics.ARCADE);
+        bullet.body.velocity.x = -400;
+      }
+      bullet.body.gravity.y = -1000;
+      bullet.anchor.setTo(0.5, 0.5);
+      bullet.body.velocity.y = 0;
+
+    });
     Connection['socket'].on('onPlayerDisconnect', function(data) {
         console.log(data.name + " Disconnected");
         prefabs = Platformer.TiledState.prototype.tilemap.prefabs;

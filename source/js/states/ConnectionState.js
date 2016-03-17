@@ -43,7 +43,7 @@ Connection.Socket.prototype.alertBulletFired = function(x, y, dir) {
     y: y,
     dir: dir
   };
-  Connection.socket.emit('onMove', data);
+  Connection.socket.emit('onBulletFired', data);
 };
 
 Connection.Socket.prototype.onMove = function(x, y, dir) {
