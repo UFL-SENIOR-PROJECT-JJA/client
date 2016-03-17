@@ -23,6 +23,7 @@ Platformer.InitalState.prototype.preload = function () {
 
 Platformer.InitalState.prototype.create = function () {
     console.log(username);
+    game.stage.backgroundColor = 0x000000;
     //  this.game.stage.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
      //
     //  this.game.scale.minWidth = 240;
