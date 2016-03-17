@@ -55,7 +55,11 @@ var reloadLobbies = function(lobbies){
 var joinLobbyState = function () {
         //move to lobby state after callback is recieved
         console.log("joinLobbyState Method");
-        Platformer["joinLobby"].game.state.start("LobbyState", true, false);
+        Platformer["joinLobby"].game.state.start("LobbyState", true, false, {
+            lobbyName: "Test",
+            lobbyID: "Test",
+            owner: "Me"
+        });
 };
 
 
