@@ -18,7 +18,7 @@ Platformer.LoadingState.prototype.preload = function () {
     "use strict";
     var assets, asset_loader, asset_key, asset;
     assets = this.level_data.assets;
-    this.load.spritesheet('bullet', "../assets/images/bullet_spritesheet.png", 32,32,1,0,0);
+    this.load.image('bullet', "../assets/images/bullet.png");
     for (asset_key in assets) { // load assets according to asset key
         if (assets.hasOwnProperty(asset_key)) {
             asset = assets[asset_key];

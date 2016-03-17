@@ -36,7 +36,7 @@ Platformer.Player.prototype.update = function () {
     this.game_state.game.physics.arcade.collide(this, this.game_state.layers.collision);
     this.game_state.game.physics.arcade.collide(this, this.game_state.groups.enemies, this.hit_enemy, null, this);
     this.game_state.game.physics.arcade.collide(this, this.game_state.groups.players);
-
+    this.game_state.game.physics.arcade.collide(this, this.game_state.groups.bullets, this.bullet_hit_enemy, null, this);
 
     if (this.cursors.right.isDown && this.body.velocity.x >= 0) {
         // move right
@@ -94,18 +94,25 @@ Platformer.Player.prototype.update = function () {
 Platformer.Player.prototype.create_bullet = function(direction){
   var bullet;
   //console.log(Platformer);
+  Connection.Socket.prototype.alertBulletFired(this.x, this.y, this.direction);
   if(direction === 'right'){
-    bullet = Platformer.groups['bullets'].create(this.body.x + this.body.width/2 + 5, this.y - 2, 'bullet');
+    bullet = Platformer.groups['bullets'].create(this.x + this.body.width/2 + 16, this.y + 10, 'bullet');
     game.physics.enable(bullet, Phaser.Physics.ARCADE);
     bullet.body.velocity.x = 400;
   }else{
-    bullet = Platformer.groups['bullets'].create(this.body.x - this.body.width/2 - 5, this.y - 2, 'bullet');
+    bullet = Platformer.groups['bullets'].create(this.x - this.body.width/2 - 16, this.y + 10, 'bullet');
     game.physics.enable(bullet, Phaser.Physics.ARCADE);
     bullet.body.velocity.x = -400;
   }
   bullet.body.gravity.y = -1000;
   bullet.anchor.setTo(0.5, 0.5);
   bullet.body.velocity.y = 0;
+}
+
+Platformer.Player.prototype.bullet_hit_enemy = function (player, enemy) {
+  "use strict";
+      //enemy.kill();
+      console.log("A BULLET HIT ME, I AM DEAD X.X");
 }
 
 Platformer.Player.prototype.hit_enemy = function (player, enemy) {

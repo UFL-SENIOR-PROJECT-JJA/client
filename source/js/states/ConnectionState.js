@@ -35,6 +35,16 @@ Connection.Socket.prototype.preload = function () {
   console.log("You've logged in as: " + this.socket.name);
 };
 
+Connection.Socket.prototype.alertBulletFired = function(x, y, dir) {
+  var data = {
+    id: Connection.socket.ID,
+    name: Connection.socket.name,
+    x: x,
+    y: y,
+    dir: dir
+  };
+  Connection.socket.emit('onMove', data);
+};
 
 Connection.Socket.prototype.onMove = function(x, y, dir) {
   var data = {
