@@ -131,7 +131,20 @@ Platformer.TiledState.prototype.create_server_objects = function (type, data, ti
 Platformer.TiledState.prototype.getOnlinePlayers = function (tilemap) {
     this.tilemap = tilemap;
 
-    Connection['socket'].emit('requestLobbyUsers');
+    Connection['socket'].emit('requestLobbyUsers', function(data) {
+        for (var user in data) {
+            // skip loop if the property is from prototype
+            if (!data.hasOwnProperty(user)) continue;
+            //get that user
+            console.log(data[user]);
+
+            if(data[user].name != null && data[user].name != Connection['socket'].name) {
+              Platformer.TiledState.prototype.create_server_objects("other_player", data[user], tilemap);
+            }
+            console.log(data[user].name + " Connected");
+
+        }
+    });
     Connection['socket'].on('onPlayerConnect', function(data) {
         //we need to have a player connect...
         //To connect, a player will start their game, send notification to server, server notifies every other player

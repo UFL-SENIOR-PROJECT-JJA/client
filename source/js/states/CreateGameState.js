@@ -54,6 +54,8 @@ var moveToLobbyState = function (data) {
 var onClickCreateLobby = function() {
     //Connection send socket signal to create LobbyState with callback to open lobbyState
     //Connection.Socket.prototype.onCreateLobby("Test Lobby", 1, 4, Platformer.CreateGameState.prototype.moveToLobbyState);
+    //USELESS INFORMATION
+    //TODO: Make this not useless
     data = {
         name: "TestLobby",
         mapID: 1,

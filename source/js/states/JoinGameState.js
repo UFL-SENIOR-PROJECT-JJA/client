@@ -26,6 +26,7 @@ Platformer.JoinGameState.prototype.create = function () {
     //Buttons.add(this.game.add.button(this.game.width/2 - (192/2), this.game.height/2 - (42/2) - 45, 'createGame', onClickCreateLobby, this, 1, 0, 2));
     //this.game.state.start("LobbyState", true, false);
     Platformer["joinLobby"] = this;
+    Platformer["joinLobby"].joined = false;
     console.log("Join Lobby This");
     console.log(this);
 
@@ -40,6 +41,7 @@ Platformer.JoinGameState.prototype.startListening = function(){
 };
 
 var reloadLobbies = function(lobbies){
+    if(Platformer["joinLobby"].joined) { return; }
     for(var i = 0; i < Platformer['joinButtons'].buttons.length; ++i) {
             Platformer['joinButtons'].buttons[i].buttonObject.destroy();
     }
@@ -52,14 +54,12 @@ var reloadLobbies = function(lobbies){
     }
 
 };
-var joinLobbyState = function () {
+var joinLobbyState = function (data) {
         //move to lobby state after callback is recieved
         console.log("joinLobbyState Method");
-        Platformer["joinLobby"].game.state.start("LobbyState", true, false, {
-            lobbyName: "Test",
-            lobbyID: "Test",
-            owner: "Me"
-        });
+        console.log(data);
+        Platformer["joinLobby"].joined = true;
+        Platformer["joinLobby"].game.state.start("LobbyState", true, false, data);
 };
 
 
