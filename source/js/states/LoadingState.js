@@ -20,7 +20,7 @@ Platformer.LoadingState.prototype.preload = function () {
     assets = this.level_data.assets;
     this.load.image('bullet', "assets/images/blue_bullet.png");
     this.load.image('gravestone', "assets/images/grave_stone.png");
-    this.load.image('jetpack', "assets/images/jet_pack.png");
+    this.load.image('jetpack_bar', "assets/images/jetpack_bar.png");
     this.load.spritesheet('player_32bit_flipped', "assets/images/player_32bit_flipped.png",32,32,4,0,0);
 
     for (asset_key in assets) { // load assets according to asset key

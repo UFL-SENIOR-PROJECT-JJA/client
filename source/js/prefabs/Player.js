@@ -31,22 +31,31 @@ Platformer.Player = function (game_state, position, properties) {
 
     //this.frame = 3;
 
-    //this.jetPackSymbol = game.add.sprite(10,40,'jetpack');
-
+    this.bar = game_state.add.bitmapData(160, 16);
+    game.add.sprite(130, 970, this.bar);
+    this.bar.context.fillStyle = '#fff';
     this.anchor.setTo(0.5, 0);
 
+    this.jetpackText = game.add.text(60,980,"Jetpack:",
+   {
+       size: "24px",
+       fill: "#FFF",
+       align: "center"
+   });
+   this.jetpackText.anchor.setTo(0.5,0.5);
 
-  //   this.scoreText = game.add.text(
-  //  90,
-  //  70,
-  //  "",
-  //  {
-  //      size: "32px",
-  //      fill: "#FFF",
-  //      align: "center"
-  //  });
-  //  this.scoreText.setText(this.jetpackFuel);
-  //  this.scoreText.anchor.setTo(0.5,0.5);
+   this.healthBar = game_state.add.bitmapData(160, 16);
+   game.add.sprite(420, 970, this.healthBar);
+   this.healthBar.context.fillStyle = '#0f0';
+   this.anchor.setTo(0.5, 0);
+
+   this.healthText = game.add.text(360,980,"Health:",
+  {
+      size: "24px",
+      fill: "#FFF",
+      align: "center"
+  });
+  this.healthText.anchor.setTo(0.5,0.5);
 
     this.cursors = this.game_state.game.input.keyboard.createCursorKeys();
 };
@@ -135,7 +144,14 @@ Platformer.Player.prototype.update = function () {
       this.create_bullet(this.direction);
 
     }
-    // this.scoreText.setText(this.jetpackFuel);
+
+    this.bar.context.clearRect(0, 0, this.bar.width, this.bar.height);
+    this.bar.context.fillRect(0, 0, this.jetpackFuel*2, 16);
+    this.bar.dirty = true;
+
+    this.healthBar.context.clearRect(0, 0, this.healthBar.width, this.healthBar.height);
+    this.healthBar.context.fillRect(0, 0, this.lives*51, 16);
+    this.healthBar.dirty = true;
 };
 
 Platformer.Player.prototype.create_bullet = function(direction){
