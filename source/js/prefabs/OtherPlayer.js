@@ -19,7 +19,7 @@ Platformer.OtherPlayer = function (game_state, position, properties, name) {
     this.body.immovable = true;
     //  this.body.collideWorldBounds = true;
 
-    this.animations.add("walking", [0, 1, 2, 1], 6, true);
+    this.animations.add("walking", [0, 1, 0, 2], 12, true);
 
 
     this.frame = 2;

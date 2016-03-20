@@ -22,7 +22,7 @@ Platformer.Player = function (game_state, position, properties) {
     // this.lifeIcons[2] = this.sprite();
 
 
-    this.animations.add("walking", [0, 1, 2], 9, true);
+    this.animations.add("walking", [0, 1, 0, 2], 12, true);
     this.animations.add("jumping", [3,0], 15, true);
     this.animations.add("stopped", [0], 1, true);
 
