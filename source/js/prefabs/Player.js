@@ -27,7 +27,7 @@ Platformer.Player = function (game_state, position, properties) {
     this.animations.add("stopped", [0], 1, true);
 
     this.timer = 0;
-    this.jetpackFuel = 100;
+    this.jetpackFuel = 80;
 
     //this.frame = 3;
 
@@ -98,14 +98,14 @@ Platformer.Player.prototype.update = function () {
     //     this.animations.play("jumping");
     //     this.isStopped = false;
     // }
-    if (this.cursors.up.isDown && this.jetpackFuel >= 2.5) {
-        this.jetpackFuel -= 2.5;
+    if (this.cursors.up.isDown && this.jetpackFuel >= 1) {
+        this.jetpackFuel -= 1;
         console.log("fuel is: " + this.jetpackFuel);
         this.body.velocity.y = -this.jumping_speed/2;
         this.animations.play("jumping");
         this.isStopped = false;
-    }else if (this.body.blocked.down && this.jetpackFuel <= 100){
-      this.jetpackFuel += .5;
+    }else if (this.body.blocked.down && this.jetpackFuel <= 80){
+      this.jetpackFuel += 1;
     }
 
     // dies if touches the end of the screen

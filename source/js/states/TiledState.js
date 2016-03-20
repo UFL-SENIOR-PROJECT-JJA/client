@@ -89,7 +89,7 @@ Platformer.TiledState.prototype.create_object = function (object) {
     // create object according to its type
     switch (object.type) {
     case "player":
-        prefab = new Platformer.Player(this, {"x":37,"y":270}, object.properties);
+        prefab = new Platformer.Player(this, {"x":37,"y":237}, object.properties);
         break;
     case "other_player":
         prefab = new Platformer.OtherPlayer(this, position, object.properties);

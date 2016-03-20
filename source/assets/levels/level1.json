@@ -1,11 +1,11 @@
 {
     "assets": {
-        "map_tiles": { "type": "image", "source": "assets/images/tiles_spritesheet.png" },
+        "map_tiles": { "type": "image", "source": "assets/images/lunar_tilemap.png" },
         "player_spritesheet": { "type": "spritesheet", "source": "assets/images/player_32bit_flipped.png", "frame_width": 32, "frame_height": 32, "frames": 4, "margin": 0, "spacing": 0 },
         "slime_image": { "type": "image", "source": "assets/images/slime.png" },
         "fly_spritesheet": { "type": "spritesheet", "source": "assets/images/fly_spritesheet.png", "frame_width": 37, "frame_height": 20, "frames": 2 },
         "goal_image": { "type": "image", "source": "assets/images/goal.png" },
-        "level_tilemap": { "type": "tilemap", "source": "assets/maps/level1_map.json" }
+        "level_tilemap": { "type": "tilemap", "source": "assets/maps/map_1.json" }
     },
     "groups": [
         "enemies",
