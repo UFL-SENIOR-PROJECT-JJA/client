@@ -43,7 +43,7 @@ Platformer.OtherPlayer.prototype.move = function(x, y, dir) {
     //this.game_state.game.physics.arcade.moveToXY(this, x, y, 250);
     //this.x = x, this.y = y;
     //x = x - this.width/2*dir*(-1);
-    this.game_state.game.add.tween(this).to({ x ,y }, 5, Phaser.Easing.Linear.None,true,0);
+    this.game_state.game.add.tween(this).to({ x ,y }, 20, Phaser.Easing.Linear.None,true,0);
     this.animations.play("walking");
     if(dir != 0) {
         this.scale.setTo(dir, 1);
