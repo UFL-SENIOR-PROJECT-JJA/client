@@ -123,25 +123,36 @@ Platformer.Player.prototype.update = function () {
 };
 
 Platformer.Player.prototype.create_bullet = function(direction){
-  var bullet;
-  //console.log(Platformer);
-  var timeMade = game.time.now;
-  Connection.Socket.prototype.alertBulletFired(this.x, this.y, this.direction, timeMade);
-  if(direction === 'right'){
-    bullet = Platformer.groups['bullets'].create(this.x + this.body.width/2 + 16, this.y + 10, 'bullet');
-    game.physics.enable(bullet, Phaser.Physics.ARCADE);
-    bullet.body.velocity.x = 400;
-  }else{
-    bullet = Platformer.groups['bullets'].create(this.x - this.body.width/2 - 16, this.y + 10, 'bullet');
-    game.physics.enable(bullet, Phaser.Physics.ARCADE);
-    bullet.body.velocity.x = -400;
+  // var bullet;
+  // //console.log(Platformer);
+  // var timeMade = game.time.now;
+  // Connection.Socket.prototype.alertBulletFired(this.x, this.y, this.direction, timeMade);
+  // if(direction === 'right'){
+  //   bullet = Platformer.groups['bullets'].create(this.x + this.body.width/2 + 16, this.y + 10, 'bullet');
+  //   game.physics.enable(bullet, Phaser.Physics.ARCADE);
+  //   bullet.body.velocity.x = 400;
+  // }else{
+  //   bullet = Platformer.groups['bullets'].create(this.x - this.body.width/2 - 16, this.y + 10, 'bullet');
+  //   game.physics.enable(bullet, Phaser.Physics.ARCADE);
+  //   bullet.body.velocity.x = -400;
+  // }
+  // bullet.body.gravity.y = -1000;
+  // bullet.anchor.setTo(0.5, 0.5);
+  // bullet.body.velocity.y = 0;
+  //
+  // bullet.id = timeMade + Connection.socket.name;
+  // console.log("bullet " + bullet.id + " has been fired");
+  var position = {
+    direction: direction,
+    x: this.x,
+    y: this.y
   }
-  bullet.body.gravity.y = -1000;
-  bullet.anchor.setTo(0.5, 0.5);
-  bullet.body.velocity.y = 0;
-
-  bullet.id = timeMade + Connection.socket.name;
-  console.log("bullet " + bullet.id + " has been fired");
+  var properties = {
+    texture:"bullet"
+  };
+  console.log(Platformer);
+  bullet = new Platformer.Bullet(this.game_state, position, properties);
+  //prefab = new Platformer.Player(this.game_state, position, properties);
 }
 
 Platformer.Player.prototype.bullet_hit_enemy = function (player, enemy) {
