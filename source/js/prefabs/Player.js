@@ -31,22 +31,22 @@ Platformer.Player = function (game_state, position, properties) {
 
     //this.frame = 3;
 
-    this.jetPackSymbol = game.add.sprite(10,40,'jetpack');
+    //this.jetPackSymbol = game.add.sprite(10,40,'jetpack');
 
     this.anchor.setTo(0.5, 0);
 
 
-    this.scoreText = game.add.text(
-   90,
-   70,
-   "",
-   {
-       size: "32px",
-       fill: "#FFF",
-       align: "center"
-   });
-   this.scoreText.setText(this.jetpackFuel);
-   this.scoreText.anchor.setTo(0.5,0.5);
+  //   this.scoreText = game.add.text(
+  //  90,
+  //  70,
+  //  "",
+  //  {
+  //      size: "32px",
+  //      fill: "#FFF",
+  //      align: "center"
+  //  });
+  //  this.scoreText.setText(this.jetpackFuel);
+  //  this.scoreText.anchor.setTo(0.5,0.5);
 
     this.cursors = this.game_state.game.input.keyboard.createCursorKeys();
 };
@@ -135,7 +135,7 @@ Platformer.Player.prototype.update = function () {
       this.create_bullet(this.direction);
 
     }
-    this.scoreText.setText(this.jetpackFuel);
+    // this.scoreText.setText(this.jetpackFuel);
 };
 
 Platformer.Player.prototype.create_bullet = function(direction){
