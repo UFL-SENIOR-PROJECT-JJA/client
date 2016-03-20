@@ -15,11 +15,19 @@ Platformer.Player = function (game_state, position, properties) {
     this.lives = 3;
     this.direction;
 
+    //TODO: this life above player stuff
+    // this.lifeIcons = [];
+    // this.lifeIcons[0] = this.add.sprite();
+    // this.lifeIcons[1] = this.add.sprite();
+    // this.lifeIcons[2] = this.sprite();
 
 
-    this.animations.add("walking", [0, 1, 2, 1], 6, true);
+    this.animations.add("walking", [0, 1, 2], 9, true);
+    this.animations.add("jumping", [3,0], 15, true);
+    this.animations.add("stopped", [0], 1, true);
 
     this.timer = 0;
+    this.jetpackFuel = 100;
 
     //this.frame = 3;
 
@@ -42,7 +50,11 @@ Platformer.Player.prototype.update = function () {
         // move right
         this.direction = 'right';
         this.body.velocity.x = this.walking_speed;
-        this.animations.play("walking");
+        if(this.body.velocity.y < 0){
+          this.animations.play("jumping");
+        }else{
+          this.animations.play("walking");
+        }
         this.scale.setTo(-1, 1);
         this.isStopped = false;
 
@@ -50,14 +62,22 @@ Platformer.Player.prototype.update = function () {
         // move left
         this.direction = 'left';
         this.body.velocity.x = -this.walking_speed;
-        this.animations.play("walking");
+        if(this.body.velocity.y < 0){
+          this.animations.play("jumping");
+        }else{
+          this.animations.play("walking");
+        }
         this.scale.setTo(1, 1);
         this.isStopped = false;
 
     } else {
         // stop
         this.body.velocity.x = 0;
-        this.animations.stop();
+        if(this.body.velocity.y < 0){
+          this.animations.play("jumping");
+        }else{
+          this.animations.play("stopped");
+        }
         //this.frame = 3;
         //SEND STOP MOVEMENT
 
@@ -72,9 +92,20 @@ Platformer.Player.prototype.update = function () {
     }
 
     // jump only if touching a tile
-    if (this.cursors.up.isDown && this.body.blocked.down) {
-        this.body.velocity.y = -this.jumping_speed;
+    // if ((this.cursors.up.isDown && this.body.blocked.down) || (this.cursors.up.isDown && this.jumpTimer < game.time.now)) {
+    //     this.jumpTimer = game.time.now + 800;
+    //     this.body.velocity.y = -this.jumping_speed;
+    //     this.animations.play("jumping");
+    //     this.isStopped = false;
+    // }
+    if (this.cursors.up.isDown && this.jetpackFuel >= 2.5) {
+        this.jetpackFuel -= 2.5;
+        console.log("fuel is: " + this.jetpackFuel);
+        this.body.velocity.y = -this.jumping_speed/2;
+        this.animations.play("jumping");
         this.isStopped = false;
+    }else if (this.body.blocked.down && this.jetpackFuel <= 100){
+      this.jetpackFuel += .5;
     }
 
     // dies if touches the end of the screen

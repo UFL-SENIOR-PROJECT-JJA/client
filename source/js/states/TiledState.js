@@ -123,7 +123,7 @@ Platformer.TiledState.prototype.create_server_objects = function (type, data, ti
     var properties = {bouncing:"20",
     group:"players",
     jumping_speed:"500",
-    texture:"player_spritesheet",
+    texture:"player_32bit_flipped",
     walking_speed:"200"};
     prefab = new Platformer.OtherPlayer(tilemap, position, properties, data.name);
     tilemap.prefabs[data.name] = prefab;
