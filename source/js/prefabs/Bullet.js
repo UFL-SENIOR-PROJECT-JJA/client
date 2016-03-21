@@ -10,17 +10,19 @@ Platformer.Bullet = function (game_state, position, properties) {
     Connection.Socket.prototype.alertBulletFired(position.x, position.y, position.direction, timeMade);
     if(position.direction === 'right'){
       console.log("firing right: x= " + position.x + ", y= " + position.y);
-      Phaser.Sprite.call(this, game_state.game, position.x + 32, position.y + 12, 'bullet');
+      Phaser.Sprite.call(this, game_state.game, position.x + 24, position.y + 14, 'bullet');
       this.game_state = game_state;
       this.game_state.groups['bullets'].add(this);
       game.physics.enable(this, Phaser.Physics.ARCADE);
+      this.body.setSize(8,4,-12,1);
       this.body.velocity.x = 400;
     }else{
       console.log("firing left: x= " + position.x + ", y= " + position.y);
-      Phaser.Sprite.call(this, game_state.game, position.x - 32, position.y + 12, 'bullet');
+      Phaser.Sprite.call(this, game_state.game, position.x - 24, position.y + 14, 'bullet');
       this.game_state = game_state;
       this.game_state.groups['bullets'].add(this);
       game.physics.enable(this, Phaser.Physics.ARCADE);
+      this.body.setSize(8,4,12,1);
       this.body.velocity.x = -400;
     }
     this.body.gravity.y = -1000;

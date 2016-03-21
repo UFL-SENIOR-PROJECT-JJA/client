@@ -36,6 +36,7 @@ Platformer.Player = function (game_state, position, properties) {
     this.bar.context.fillStyle = '#fff';
     this.anchor.setTo(0.5, 0);
 
+
     this.jetpackText = game.add.text(60,980,"Jetpack:",
    {
        size: "24px",
@@ -124,7 +125,6 @@ Platformer.Player.prototype.update = function () {
     // }
     if (this.cursors.up.isDown && this.jetpackFuel >= 1) {
         this.jetpackFuel -= 1;
-        console.log("fuel is: " + this.jetpackFuel);
         this.body.velocity.y = -this.jumping_speed/2;
         this.animations.play("jumping");
         this.isStopped = false;
@@ -140,7 +140,7 @@ Platformer.Player.prototype.update = function () {
     //allow the player to attack using spacebar
     if(this.spacebar.isDown && this.timer < game.time.now){
       //do attack
-      this.timer = game.time.now + 500;
+      this.timer = game.time.now + 400;
       this.create_bullet(this.direction);
 
     }

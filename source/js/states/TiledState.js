@@ -178,12 +178,14 @@ Platformer.TiledState.prototype.getOnlinePlayers = function (tilemap) {
 
     Connection['socket'].on('onReceiveBullet', function(data) {
       if(data.dir === 'right'){
-        bullet = Platformer.groups['bullets'].create(data.x + 16 + 16, data.y + 10, 'bullet');
+        bullet = Platformer.groups['bullets'].create(data.x + 10 , data.y + 14, 'bullet');
         game.physics.enable(bullet, Phaser.Physics.ARCADE);
+        bullet.body.setSize(4,4,-12,1);
         bullet.body.velocity.x = 400;
       }else{
-        bullet = Platformer.groups['bullets'].create(data.x - 16 - 16, data.y + 10, 'bullet');
+        bullet = Platformer.groups['bullets'].create(data.x - 10, data.y + 14, 'bullet');
         game.physics.enable(bullet, Phaser.Physics.ARCADE);
+        bullet.body.setSize(4,4,12,1);
         bullet.body.velocity.x = -400;
       }
       bullet.id = data.uID;
