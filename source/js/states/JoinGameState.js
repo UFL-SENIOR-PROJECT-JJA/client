@@ -46,10 +46,11 @@ var reloadLobbies = function(lobbies){
             Platformer['joinButtons'].buttons[i].buttonObject.destroy();
     }
     Platformer['joinButtons'].buttons = [];
-
+    var btnScale = .50;
     for(var i = 0; i < lobbies.length; ++i) {
             var button = makeLobbyButton(lobbies[i]);
-            button.buttonObject = Platformer['joinButtons'].game.add.button(this.game.width/2 - (192/2), this.game.height/2 - (42/2) - 45 + i*50, 'createGame', button.buttonFunction, this, 1, 0, 2);
+            button.buttonObject = new LabelButton(this.game,this.game.width/4, this.game.height/2 - ((190*btnScale)/2) + 175, "blueButton", lobbies[i].lobbyName,  button.buttonFunction, this, 1, 0, 2); // button frames 1=over, 0=off, 2=down
+            button.buttonObject.scale.setTo(btnScale, btnScale);
             Platformer['joinButtons'].buttons.push(button);
     }
 
@@ -67,8 +68,8 @@ var onClickJoinLobby = function() {
     console.log('clicked');
 };
 
-var makeLobbyButton = function(lobbyID) {
-
+var makeLobbyButton = function(lobby) {
+    lobbyID = lobby.lobbyID;
     var button = {
         buttonFunction: function () {
             console.log(lobbyID);
