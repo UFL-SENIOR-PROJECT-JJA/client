@@ -39,6 +39,8 @@ Platformer.TiledState.prototype.create = function () {
     console.log("TiledState Created");
     var group_name, object_layer, collision_tiles;
 
+    //if its mobile create the touch buttons
+
     // create map layers
     this.layers = {};
     this.map.layers.forEach(function (layer) {

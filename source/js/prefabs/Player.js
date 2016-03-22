@@ -30,35 +30,81 @@ Platformer.Player = function (game_state, position, properties) {
     this.jetpackFuel = 80;
 
     //this.frame = 3;
+    this.rightPressed = false;
+    this.leftPressed = false;
+    this.upPressed = false;
+    this.firePressed = false;
+    Platformer.thisPlayer = this;
 
-    this.bar = game_state.add.bitmapData(160, 16);
-    game.add.sprite(130, 970, this.bar);
+    if(!this.game.device.desktop){
+      this.rightArrow = game.add.button(110, 380, 'right_arrow', null, this, 0, 1, 0, 1);  //game, x, y, key, callback, callbackContext, overFrame, outFrame, downFrame, upFrame
+      this.rightArrow.fixedToCamera = true;  //our buttons should stay on the same place
+      this.rightArrow.events.onInputOver.add(function(){Platformer.thisPlayer.rightPressed=true;});
+      this.rightArrow.events.onInputOut.add(function(){Platformer.thisPlayer.rightPressed=false;});
+      this.rightArrow.events.onInputDown.add(function(){Platformer.thisPlayer.rightPressed=true;});
+      this.rightArrow.events.onInputUp.add(function(){Platformer.thisPlayer.rightPressed=false;});
+
+      this.leftArrow = game.add.button(10, 380, 'left_arrow', null, this, 0, 1, 0, 1);  //game, x, y, key, callback, callbackContext, overFrame, outFrame, downFrame, upFrame
+      this.leftArrow.fixedToCamera = true;  //our buttons should stay on the same place
+      this.leftArrow.events.onInputOver.add(function(){Platformer.thisPlayer.leftPressed=true;});
+      this.leftArrow.events.onInputOut.add(function(){Platformer.thisPlayer.leftPressed=false;});
+      this.leftArrow.events.onInputDown.add(function(){Platformer.thisPlayer.leftPressed=true;});
+      this.leftArrow.events.onInputUp.add(function(){Platformer.thisPlayer.leftPressed=false;});
+
+      this.upArrow = game.add.button(60, 330, 'up_arrow', null, this, 0, 1, 0, 1);  //game, x, y, key, callback, callbackContext, overFrame, outFrame, downFrame, upFrame
+      this.upArrow.fixedToCamera = true;  //our buttons should stay on the same place
+      this.upArrow.events.onInputOver.add(function(){Platformer.thisPlayer.upPressed=true;});
+      this.upArrow.events.onInputOut.add(function(){Platformer.thisPlayer.upPressed=false;});
+      this.upArrow.events.onInputDown.add(function(){Platformer.thisPlayer.upPressed=true;});
+      this.upArrow.events.onInputUp.add(function(){Platformer.thisPlayer.upPressed=false;});
+
+      this.fireButton = game.add.button(700, 360, 'fire_button', null, this, 0, 1, 0, 1);  //game, x, y, key, callback, callbackContext, overFrame, outFrame, downFrame, upFrame
+      this.fireButton.fixedToCamera = true;  //our buttons should stay on the same place
+      this.fireButton.events.onInputOver.add(function(){Platformer.thisPlayer.firePressed=true;});
+      this.fireButton.events.onInputOut.add(function(){Platformer.thisPlayer.firePressed=false;});
+      this.fireButton.events.onInputDown.add(function(){Platformer.thisPlayer.firePressed=true;});
+      this.fireButton.events.onInputUp.add(function(){Platformer.thisPlayer.firePressed=false;});
+
+
+      this.upRight = game.add.button(124, 360, 'transparent_32bit', null, this, 0, 1, 0, 1);  //game, x, y, key, callback, callbackContext, overFrame, outFrame, downFrame, upFrame
+      this.upRight.fixedToCamera = true;  //our buttons should stay on the same place
+      this.upRight.events.onInputOver.add(function(){Platformer.thisPlayer.upPressed=true;Platformer.thisPlayer.rightPressed=true;});
+      this.upRight.events.onInputOut.add(function(){Platformer.thisPlayer.upPressed=false;Platformer.thisPlayer.rightPressed=false;});
+      this.upRight.events.onInputDown.add(function(){Platformer.thisPlayer.upPressed=true;Platformer.thisPlayer.rightPressed=true;});
+      this.upRight.events.onInputUp.add(function(){Platformer.thisPlayer.upPressed=false;Platformer.thisPlayer.rightPressed=false;});
+
+      this.upLeft = game.add.button(24, 360, 'transparent_32bit', null, this, 0, 1, 0, 1);  //game, x, y, key, callback, callbackContext, overFrame, outFrame, downFrame, upFrame
+      this.upLeft.fixedToCamera = true;  //our buttons should stay on the same place
+      this.upLeft.events.onInputOver.add(function(){Platformer.thisPlayer.upPressed=true;Platformer.thisPlayer.leftPressed=true;});
+      this.upLeft.events.onInputOut.add(function(){Platformer.thisPlayer.upPressed=false;Platformer.thisPlayer.leftPressed=false;});
+      this.upLeft.events.onInputDown.add(function(){Platformer.thisPlayer.upPressed=true;Platformer.thisPlayer.leftPressed=true;});
+      this.upLeft.events.onInputUp.add(function(){Platformer.thisPlayer.upPressed=false;Platformer.thisPlayer.leftPressed=false;});
+
+    }
+
+    // this.this.rightArrow = game.add.sprite(80,380,'right_arrow');
+    // this.this.rightArrow.fixedToCamera = true;
+
+    this.bar = game_state.add.bitmapData(160, 12);
+    this.testBar = game.add.sprite(50, 32, this.bar);
     this.bar.context.fillStyle = '#fff';
+    this.testBar.fixedToCamera = true;
     this.anchor.setTo(0.5, 0);
 
+    this.jetpackIcon = game.add.sprite(20,30,'jetpack_icon');
+    this.jetpackIcon.fixedToCamera = true;
+    this.hpIcon = game.add.sprite(20,10,'hp_icon');
+    this.hpIcon.fixedToCamera = true;
 
-    this.jetpackText = game.add.text(60,980,"Jetpack:",
-   {
-       size: "24px",
-       fill: "#FFF",
-       align: "center"
-   });
-   this.jetpackText.anchor.setTo(0.5,0.5);
 
-   this.healthBar = game_state.add.bitmapData(160, 16);
-   game.add.sprite(420, 970, this.healthBar);
-   this.healthBar.context.fillStyle = '#0f0';
-   this.anchor.setTo(0.5, 0);
-
-   this.healthText = game.add.text(360,980,"Health:",
-  {
-      size: "24px",
-      fill: "#FFF",
-      align: "center"
-  });
-  this.healthText.anchor.setTo(0.5,0.5);
+    this.healthBar = game_state.add.bitmapData(160, 12);
+    this.cameraHealthBar = game.add.sprite(50, 12, this.healthBar);
+    this.healthBar.context.fillStyle = '#0f0';
+    this.cameraHealthBar.fixedToCamera = true;
+    this.anchor.setTo(0.5, 0);
 
     this.cursors = this.game_state.game.input.keyboard.createCursorKeys();
+    this.game_state.camera.follow(this);
 };
 
 Platformer.Player.prototype = Object.create(Platformer.Prefab.prototype);
@@ -71,30 +117,51 @@ Platformer.Player.prototype.update = function () {
     this.game_state.game.physics.arcade.collide(this, this.game_state.groups.players);
     this.game_state.game.physics.arcade.collide(this, this.game_state.groups.bullets, this.bullet_hit_enemy, null, this);
 
-    if (this.cursors.right.isDown && this.body.velocity.x >= 0) {
-        // move right
-        this.direction = 'right';
-        this.body.velocity.x = this.walking_speed;
-        if(this.body.velocity.y < 0){
-          this.animations.play("jumping");
-        }else{
-          this.animations.play("walking");
-        }
-        this.scale.setTo(-1, 1);
-        this.isStopped = false;
+    if(this.game.device.desktop) {
 
-    } else if (this.cursors.left.isDown && this.body.velocity.x <= 0) {
-        // move left
-        this.direction = 'left';
-        this.body.velocity.x = -this.walking_speed;
-        if(this.body.velocity.y < 0){
-          this.animations.play("jumping");
-        }else{
-          this.animations.play("walking");
-        }
-        this.scale.setTo(1, 1);
-        this.isStopped = false;
+      if(this.cursors.right.isUp){
+        this.rightPressed = false;
+      }
+      if(this.cursors.left.isUp){
+        this.leftPressed = false;
+      }
+      if(this.cursors.up.isUp){
+        this.upPressed = false;
+      }
+      if(this.spacebar.isUp){
+        this.firePressed = false;
+      }
 
+      if (this.cursors.right.isDown && this.body.velocity.x >= 0) {
+          // move right
+          this.rightPressed = true;
+
+      } else if (this.cursors.left.isDown && this.body.velocity.x <= 0) {
+          // move left
+          this.leftPressed = true;
+
+      }
+
+      if (this.cursors.up.isDown) {
+          this.upPressed = true;
+      }
+
+      //allow the player to attack using spacebar
+      if(this.spacebar.isDown){
+        this.firePressed = true;
+      }
+
+    }else{
+        //stuff for mobile here
+    }
+
+
+
+    //new move stuff
+    if(this.rightPressed){
+      this.moveRight();
+    }else if(this.leftPressed){
+      this.moveLeft();
     } else {
         // stop
         this.body.velocity.x = 0;
@@ -103,10 +170,20 @@ Platformer.Player.prototype.update = function () {
         }else{
           this.animations.play("stopped");
         }
-        //this.frame = 3;
-        //SEND STOP MOVEMENT
 
     }
+
+    if(this.upPressed){
+      this.jump();
+    }
+    if (this.body.blocked.down && this.jetpackFuel < 80){
+      this.jetpackFuel += 1;
+    }
+
+    if(this.firePressed){
+      this.shoot();
+    }
+
     //SERVER MOVEMENT COMMUNICATION
     if (this.body.velocity.x != 0 || this.body.velocity.y != 0) {
         this.sendMovement();
@@ -116,43 +193,55 @@ Platformer.Player.prototype.update = function () {
         this.isStopped = true;
     }
 
-    // jump only if touching a tile
-    // if ((this.cursors.up.isDown && this.body.blocked.down) || (this.cursors.up.isDown && this.jumpTimer < game.time.now)) {
-    //     this.jumpTimer = game.time.now + 800;
-    //     this.body.velocity.y = -this.jumping_speed;
-    //     this.animations.play("jumping");
-    //     this.isStopped = false;
-    // }
-    if (this.cursors.up.isDown && this.jetpackFuel >= 1) {
-        this.jetpackFuel -= 1;
-        this.body.velocity.y = -this.jumping_speed/2;
-        this.animations.play("jumping");
-        this.isStopped = false;
-    }else if (this.body.blocked.down && this.jetpackFuel < 80){
-      this.jetpackFuel += 1;
-    }
-
-    // dies if touches the end of the screen
-    if (this.bottom >= this.game_state.game.world.height) {
-        this.game_state.restart_level();
-    }
-
-    //allow the player to attack using spacebar
-    if(this.spacebar.isDown && this.timer < game.time.now){
-      //do attack
-      this.timer = game.time.now + 400;
-      this.create_bullet(this.direction);
-
-    }
-
     this.bar.context.clearRect(0, 0, this.bar.width, this.bar.height);
     this.bar.context.fillRect(0, 0, this.jetpackFuel*2, 16);
     this.bar.dirty = true;
 
     this.healthBar.context.clearRect(0, 0, this.healthBar.width, this.healthBar.height);
-    this.healthBar.context.fillRect(0, 0, this.lives*51, 16);
+    this.healthBar.context.fillRect(0, 0, this.lives*53 + 1, 16);
     this.healthBar.dirty = true;
 };
+
+Platformer.Player.prototype.moveRight = function(){
+  this.direction = 'right';
+  this.body.velocity.x = this.walking_speed;
+  if(this.body.velocity.y < 0){
+    this.animations.play("jumping");
+  }else{
+    this.animations.play("walking");
+  }
+  this.scale.setTo(-1, 1);
+  this.isStopped = false;
+}
+
+Platformer.Player.prototype.moveLeft = function(){
+  this.direction = 'left';
+  this.body.velocity.x = -this.walking_speed;
+  if(this.body.velocity.y < 0){
+    this.animations.play("jumping");
+  }else{
+    this.animations.play("walking");
+  }
+  this.scale.setTo(1, 1);
+  this.isStopped = false;
+}
+
+Platformer.Player.prototype.jump = function(){
+  if(this.jetpackFuel >= 1){
+    this.jetpackFuel -= 1;
+    this.body.velocity.y = -this.jumping_speed/2;
+    this.animations.play("jumping");
+    this.isStopped = false;
+  }
+}
+
+Platformer.Player.prototype.shoot = function(){
+  if(this.timer < game.time.now){
+    //do attack
+    this.timer = game.time.now + 400;
+    this.create_bullet(this.direction);
+  }
+}
 
 Platformer.Player.prototype.create_bullet = function(direction){
   // var bullet;
