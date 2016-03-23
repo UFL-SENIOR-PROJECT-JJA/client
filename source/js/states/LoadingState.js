@@ -27,6 +27,10 @@ Platformer.LoadingState.prototype.preload = function () {
     this.load.image('up_arrow', "assets/images/up_arrow.png");
     this.load.image('fire_button', "assets/images/fire_button_icon.png");
     this.load.image('transparent_32bit', "assets/images/transparent_32bit.png");
+    this.load.image('test_arrow', "assets/images/test_arrow_100px.png");
+    this.load.image('test_box', "assets/images/test_box_50px.png");
+    this.load.image('test_box_large', "assets/images/test_box_100px.png");
+    this.load.image('test_box_tall', "assets/images/test_box_tall.png");
     this.load.spritesheet('player_32bit_flipped', "assets/images/player_32bit_flipped.png",32,32,4,0,0);
 
     for (asset_key in assets) { // load assets according to asset key

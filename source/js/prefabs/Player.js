@@ -36,54 +36,24 @@ Platformer.Player = function (game_state, position, properties) {
     this.firePressed = false;
     Platformer.thisPlayer = this;
 
+
+
     if(!this.game.device.desktop){
-      this.rightArrow = game.add.button(110, 380, 'right_arrow', null, this, 0, 1, 0, 1);  //game, x, y, key, callback, callbackContext, overFrame, outFrame, downFrame, upFrame
-      this.rightArrow.fixedToCamera = true;  //our buttons should stay on the same place
-      this.rightArrow.events.onInputOver.add(function(){Platformer.thisPlayer.rightPressed=true;});
-      this.rightArrow.events.onInputOut.add(function(){Platformer.thisPlayer.rightPressed=false;});
-      this.rightArrow.events.onInputDown.add(function(){Platformer.thisPlayer.rightPressed=true;});
-      this.rightArrow.events.onInputUp.add(function(){Platformer.thisPlayer.rightPressed=false;});
 
-      this.leftArrow = game.add.button(10, 380, 'left_arrow', null, this, 0, 1, 0, 1);  //game, x, y, key, callback, callbackContext, overFrame, outFrame, downFrame, upFrame
-      this.leftArrow.fixedToCamera = true;  //our buttons should stay on the same place
-      this.leftArrow.events.onInputOver.add(function(){Platformer.thisPlayer.leftPressed=true;});
-      this.leftArrow.events.onInputOut.add(function(){Platformer.thisPlayer.leftPressed=false;});
-      this.leftArrow.events.onInputDown.add(function(){Platformer.thisPlayer.leftPressed=true;});
-      this.leftArrow.events.onInputUp.add(function(){Platformer.thisPlayer.leftPressed=false;});
-
-      this.upArrow = game.add.button(60, 330, 'up_arrow', null, this, 0, 1, 0, 1);  //game, x, y, key, callback, callbackContext, overFrame, outFrame, downFrame, upFrame
-      this.upArrow.fixedToCamera = true;  //our buttons should stay on the same place
-      this.upArrow.events.onInputOver.add(function(){Platformer.thisPlayer.upPressed=true;});
-      this.upArrow.events.onInputOut.add(function(){Platformer.thisPlayer.upPressed=false;});
-      this.upArrow.events.onInputDown.add(function(){Platformer.thisPlayer.upPressed=true;});
-      this.upArrow.events.onInputUp.add(function(){Platformer.thisPlayer.upPressed=false;});
-
-      this.fireButton = game.add.button(700, 360, 'fire_button', null, this, 0, 1, 0, 1);  //game, x, y, key, callback, callbackContext, overFrame, outFrame, downFrame, upFrame
+      this.fireButton = game.add.button(700, 350, 'fire_button', null, this, 0, 1, 0, 1);  //game, x, y, key, callback, callbackContext, overFrame, outFrame, downFrame, upFrame
       this.fireButton.fixedToCamera = true;  //our buttons should stay on the same place
-      this.fireButton.events.onInputOver.add(function(){Platformer.thisPlayer.firePressed=true;});
-      this.fireButton.events.onInputOut.add(function(){Platformer.thisPlayer.firePressed=false;});
+      // this.fireButton.events.onInputOver.add(function(){Platformer.thisPlayer.firePressed=true;});
+      // this.fireButton.events.onInputOut.add(function(){Platformer.thisPlayer.firePressed=false;});
       this.fireButton.events.onInputDown.add(function(){Platformer.thisPlayer.firePressed=true;});
       this.fireButton.events.onInputUp.add(function(){Platformer.thisPlayer.firePressed=false;});
 
+      this.pointer = null;
 
-      this.upRight = game.add.button(124, 360, 'transparent_32bit', null, this, 0, 1, 0, 1);  //game, x, y, key, callback, callbackContext, overFrame, outFrame, downFrame, upFrame
-      this.upRight.fixedToCamera = true;  //our buttons should stay on the same place
-      this.upRight.events.onInputOver.add(function(){Platformer.thisPlayer.upPressed=true;Platformer.thisPlayer.rightPressed=true;});
-      this.upRight.events.onInputOut.add(function(){Platformer.thisPlayer.upPressed=false;Platformer.thisPlayer.rightPressed=false;});
-      this.upRight.events.onInputDown.add(function(){Platformer.thisPlayer.upPressed=true;Platformer.thisPlayer.rightPressed=true;});
-      this.upRight.events.onInputUp.add(function(){Platformer.thisPlayer.upPressed=false;Platformer.thisPlayer.rightPressed=false;});
-
-      this.upLeft = game.add.button(24, 360, 'transparent_32bit', null, this, 0, 1, 0, 1);  //game, x, y, key, callback, callbackContext, overFrame, outFrame, downFrame, upFrame
-      this.upLeft.fixedToCamera = true;  //our buttons should stay on the same place
-      this.upLeft.events.onInputOver.add(function(){Platformer.thisPlayer.upPressed=true;Platformer.thisPlayer.leftPressed=true;});
-      this.upLeft.events.onInputOut.add(function(){Platformer.thisPlayer.upPressed=false;Platformer.thisPlayer.leftPressed=false;});
-      this.upLeft.events.onInputDown.add(function(){Platformer.thisPlayer.upPressed=true;Platformer.thisPlayer.leftPressed=true;});
-      this.upLeft.events.onInputUp.add(function(){Platformer.thisPlayer.upPressed=false;Platformer.thisPlayer.leftPressed=false;});
-
+      this.sprite = game.add.sprite(80,400,'right_arrow');
+      this.sprite.anchor.setTo(0.5, 0.5);
+      this.sprite.fixedToCamera = true;
     }
 
-    // this.this.rightArrow = game.add.sprite(80,380,'right_arrow');
-    // this.this.rightArrow.fixedToCamera = true;
 
     this.bar = game_state.add.bitmapData(160, 12);
     this.testBar = game.add.sprite(50, 32, this.bar);
@@ -112,6 +82,9 @@ Platformer.Player.prototype.constructor = Platformer.Player;
 
 Platformer.Player.prototype.update = function () {
     "use strict";
+
+
+
     this.game_state.game.physics.arcade.collide(this, this.game_state.layers.collision);
     this.game_state.game.physics.arcade.collide(this, this.game_state.groups.enemies, this.hit_enemy, null, this);
     this.game_state.game.physics.arcade.collide(this, this.game_state.groups.players);
@@ -153,12 +126,63 @@ Platformer.Player.prototype.update = function () {
 
     }else{
         //stuff for mobile here
+        if(game.input.pointer1.x < 400){
+          this.pointer = game.input.pointer1;
+        }else if(game.input.pointer2.x < 400){
+          this.pointer = game.input.pointer2;
+        }else{
+          this.pointer = null;
+        }
+
+
+        if(this.pointer !== null && this.pointer.isDown){
+
+          this.sprite.rotation = game.physics.arcade.angleToPointer(this.sprite, this.pointer);
+
+          if(this.sprite.rotation >= -0.3 && this.sprite.rotation < 1.6 ){
+            //console.log('right');
+            this.rightPressed = true;
+            this.leftPressed = false;
+            this.upPressed = false;
+          }else if(this.sprite.rotation < -0.3 && this.sprite.rotation >= -1.0){
+            //console.log('up-right');
+            this.rightPressed = true;
+            this.leftPressed = false;
+            this.upPressed = true;
+          }else if(this.sprite.rotation < -1.0 && this.sprite.rotation >= -2.0){
+            //console.log('up');
+            this.rightPressed = false;
+            this.leftPressed = false;
+            this.upPressed = true;
+          }else if(this.sprite.rotation < -2.0 && this.sprite.rotation >= -2.8){
+            //console.log('up-left');
+            this.rightPressed = false;
+            this.leftPressed = true;
+            this.upPressed = true;
+          }else if(this.sprite.rotation < -2.8 || this.sprite.rotation >= 1.6){
+            //console.log('left');
+            this.rightPressed = false;
+            this.leftPressed = true;
+            this.upPressed = false;
+          }else{
+            //console.log('nothing');
+            this.rightPressed = false;
+            this.leftPressed = false;
+            this.upPressed = false;
+          }
+        }else{
+          //console.log('not down');
+          this.rightPressed = false;
+          this.leftPressed = false;
+          this.upPressed = false;
+        }
     }
 
 
 
     //new move stuff
     if(this.rightPressed){
+      console.log('bloop');
       this.moveRight();
     }else if(this.leftPressed){
       this.moveLeft();
