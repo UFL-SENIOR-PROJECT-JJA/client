@@ -11,10 +11,15 @@ Platformer.prototype.constructor = Platformer.MenuState;
 
 Platformer.MenuState.prototype.init = function () {
     "use strict";
-
+    Platformer['lastState'] = {};
+    Platformer['lastState'].name = "MenuState";
+    Platformer['lastState'].reference = this;
 };
 
 Platformer.MenuState.prototype.preload = function () {
+
+    game.load.bitmapFont('font', 'assets/font/font.png', 'assets/font/font.fnt');
+
     this.load.image('menubg', 'assets/images/Galaxy-Backgrounds.jpg');
     this.load.image('overlay', 'assets/images/transparent.png');
 
@@ -32,24 +37,16 @@ Platformer.MenuState.prototype.create = function () {
     this.background.scale.setTo(.3, .3);
     this.background1 = this.game.add.tileSprite(0, 0, 2880, 1800, 'overlay');
     this.background1.scale.setTo(.5, .5);
+    this.label = game.add.bitmapText(this.game.width/2, 100, 'font', "Andres Sucks",55);
 
-
-    this.style = {
-        'font': '55px Arial',
-        'fill': 'white'
-    };
-
-    this.label = this.game.add.text(this.game.width/2, 100, "Andres Sucks", this.style);    //puts the label in the center of the button
-    this.label.stroke = '#000000';
-    this.label.strokeThickness = 6;
     this.label.anchor.setTo( 0.5, 0.5 );
 
 
 
     var btnScale = .50;
-    this.btnCreateLobby = new LabelButton(this.game,this.game.width/4, this.game.height/2 - ((190*btnScale)/2) + 175, "greenButton", "Start Game!", onClickCreateGame, this, 1, 0, 2); // button frames 1=over, 0=off, 2=down
+    this.btnCreateLobby = new LabelButton(this.game,this.game.width/4, this.game.height/2 - ((190*btnScale)/2) + 175, "greenButton", "Start Game!", onClickCreateGame, this, 1, 0, 0, 0, 50); // button frames 1=over, 0=off, 2=down
     this.btnCreateLobby.scale.setTo(btnScale, btnScale);
-    this.btnLobbys = new LabelButton(this.game,this.game.width/4 + this.game.width/2, this.game.height/2 - ((190*btnScale)/2) + 175, "blueButton", "Search Lobbies", onClickJoinGame, this, 1, 0, 2); // button frames 1=over, 0=off, 2=down
+    this.btnLobbys = new LabelButton(this.game,this.game.width/4 + this.game.width/2, this.game.height/2 - ((190*btnScale)/2) + 175, "blueButton", "Search Lobbies", onClickJoinGame, this, 1, 0, 0, 0, 50); // button frames 1=over, 0=off, 2=down
     this.btnLobbys.scale.setTo(btnScale, btnScale);
 
 

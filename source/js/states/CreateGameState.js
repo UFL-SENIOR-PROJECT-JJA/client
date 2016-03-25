@@ -12,7 +12,6 @@ Platformer.prototype.constructor = Platformer.CreateGameState;
 
 Platformer.CreateGameState.prototype.init = function () {
     "use strict";
-
 };
 
 Platformer.CreateGameState.prototype.preload = function () {
@@ -31,17 +30,18 @@ Platformer.CreateGameState.prototype.create = function () {
         'font': '35px Arial',
         'fill': 'white'
     };
-
-    this.label = this.game.add.text(this.game.width/2, 100, "Lobby Settings Here", this.style);    //puts the label in the center of the button
+    this.label = game.add.bitmapText(this.game.width/2, 100, 'font', "Start Lobby",50);
     this.label.stroke = '#000000';
     this.label.strokeThickness = 6;
     this.label.anchor.setTo( 0.5, 0.5 );
 
-
+    backButtonCreateGameState();
 
     var btnScale = .50;
-    this.btnCreateLobby = new LabelButton(this.game,this.game.width/2, this.game.height/2 - ((190*btnScale)/2) + 175, "greenButton", "Create Lobby!", onClickCreateLobby, this, 1, 0, 2); // button frames 1=over, 0=off, 2=down
-    this.btnCreateLobby.scale.setTo(btnScale, btnScale);    Platformer["createLobby"] = this;
+    this.btnCreateLobby = new LabelButton(this.game,this.game.width/2, this.game.height/2 - ((190*btnScale)/2) + 175, "greenButton", "Create Lobby!", onClickCreateLobby, this, 1, 0, 0, 0, 50); // button frames 1=over, 0=off, 2=down
+    this.btnCreateLobby.scale.setTo(btnScale, btnScale);
+    Platformer["createLobby"] = this;
+    console.log("HEREEEE")
     console.log(Platformer["createLobby"]);
 };
 
@@ -65,3 +65,12 @@ var onClickCreateLobby = function() {
 
     console.log('clicked');
 };
+
+
+var backButtonCreateGameState = function() {
+    this.backButton = new LabelButton(this.game, 75, 25, "blueButton", 'BACK',  returnToMenuFromCreateGameState, this, 1, 0, 0, 0, 90); // button frames 1=over, 0=off, 2=down
+    this.backButton.scale.setTo(.20, .20);
+}
+var returnToMenuFromCreateGameState = function() {
+    Platformer["createLobby"].game.state.start("MenuState", false, false);
+}

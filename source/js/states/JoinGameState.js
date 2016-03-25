@@ -12,6 +12,7 @@ Platformer.prototype.constructor = Platformer.JoinGameState;
 Platformer.JoinGameState.prototype.init = function () {
     "use strict";
     this.buttons = [];
+    
     Platformer['joinButtons'] = this;
     this.startListening();
 };
@@ -23,8 +24,13 @@ Platformer.JoinGameState.prototype.preload = function () {
 Platformer.JoinGameState.prototype.create = function () {
     this.background = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'menubg');
     this.background.autoScroll(-20, 0);
-    //Buttons.add(this.game.add.button(this.game.width/2 - (192/2), this.game.height/2 - (42/2) - 45, 'createGame', onClickCreateLobby, this, 1, 0, 2));
-    //this.game.state.start("LobbyState", true, false);
+    this.label = game.add.bitmapText(this.game.width/2, 100, 'font', "Choose Lobby",50);
+    this.label.stroke = '#000000';
+    this.label.strokeThickness = 6;
+    this.label.anchor.setTo( 0.5, 0.5 );
+
+    backButtonJoinGameState();
+
     Platformer["joinLobby"] = this;
     Platformer["joinLobby"].joined = false;
     console.log("Join Lobby This");
@@ -46,10 +52,10 @@ var reloadLobbies = function(lobbies){
             Platformer['joinButtons'].buttons[i].buttonObject.destroy();
     }
     Platformer['joinButtons'].buttons = [];
-    var btnScale = .50;
+    var btnScale = .30;
     for(var i = 0; i < lobbies.length; ++i) {
             var button = makeLobbyButton(lobbies[i]);
-            button.buttonObject = new LabelButton(this.game,this.game.width/4, this.game.height/2 - ((190*btnScale)/2) + 175, "blueButton", lobbies[i].lobbyName,  button.buttonFunction, this, 1, 0, 2); // button frames 1=over, 0=off, 2=down
+            button.buttonObject = new LabelButton(this.game,this.game.width/2, this.game.height/3  + (i*60), "blueButton", lobbies[i].lobbyName,  button.buttonFunction, this, 1, 0, 0, 0, 75); // button frames 1=over, 0=off, 2=down
             button.buttonObject.scale.setTo(btnScale, btnScale);
             Platformer['joinButtons'].buttons.push(button);
     }
@@ -79,3 +85,11 @@ var makeLobbyButton = function(lobby) {
     };
     return button;
 };
+
+var backButtonJoinGameState = function() {
+    this.backButton = new LabelButton(this.game, 75, 25, "blueButton", 'BACK',  returnToMenuFromJoinGameState, this, 1, 0, 0, 0, 90); // button frames 1=over, 0=off, 2=down
+    this.backButton.scale.setTo(.20, .20);
+}
+var returnToMenuFromJoinGameState = function() {
+    Platformer["joinLobby"].game.state.start("MenuState", true, false);
+}

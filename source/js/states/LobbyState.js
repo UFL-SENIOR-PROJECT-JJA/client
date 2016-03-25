@@ -58,24 +58,19 @@ Platformer.LobbyState.prototype.create = function () {
     Platformer["lobby"].background1.scale.setTo(.5, .5);
     //this.game.state.start("LobbyState", true, false);
 
-    Platformer["lobby"].style = {
-        'font': '35px Arial',
-        'fill': 'white'
-    };
     //LOBBY NAME
-    Platformer["lobby"].title = Platformer["lobby"].game.add.text(Platformer["lobby"].game.width/2, 100, "Lobby: " + Platformer["lobby"].lobbyName, Platformer["lobby"].style);    //puts the label in the center of the button
-    Platformer["lobby"].title.stroke = '#000000';
-    Platformer["lobby"].title.strokeThickness = 6;
+    Platformer["lobby"].title = game.add.bitmapText(Platformer["lobby"].game.width/2, 100, 'font', "Lobby: " + Platformer["lobby"].lobbyName, 35);    //puts the label in the center of the button
     Platformer["lobby"].title.anchor.setTo( 0.5, 0.5 );
 
     //IF OWNER OF ROOM GIVE START GAME BUTTON TO THEM
     if(Connection['socket'].name === Platformer["lobby"].owner) {
         var btnScale = .50;
-        this.btnCreateLobby = new LabelButton(this.game,this.game.width/2, this.game.height/2 - ((190*btnScale)/2) + 175, "greenButton", "Start Game!", joinGameOwner, this, 1, 0, 2); // button frames 1=over, 0=off, 2=down
+        this.btnCreateLobby = new LabelButton(this.game,this.game.width/2, this.game.height/2 - ((190*btnScale)/2) + 175, "greenButton", "Start Game!", joinGameOwner, this, 1, 0, 0, 0, 50); // button frames 1=over, 0=off, 2=down
         this.btnCreateLobby.scale.setTo(btnScale, btnScale);
         //tell everyone in the lobby to start
     }
     Platformer["lobby"].textOnScreen = [];
+    backButtonLobbyState();
 };
 
 var updateUsersInRoom = function() {
@@ -86,13 +81,13 @@ var updateUsersInRoom = function() {
         console.log("Destorying Text");
     }
     Platformer["lobby"].style = {
-        'font': '25px Arial',
+        'font': '35px Arial',
         'fill': 'white'
     };
     //ADD THE USER COUNT TO THE HEADER
-    var userLabel = Platformer["lobby"].game.add.text(Platformer["lobby"].game.width/2, 150, "Users: (" + Platformer["lobby"].lobbyUsersAmount + "/4)" , Platformer["lobby"].style);    //puts the label in the center of the button
-    userLabel.stroke = '#000000';
-    userLabel.strokeThickness = 4;
+    var userText = "Users: (" + Platformer["lobby"].lobbyUsersAmount + "/4)";
+    var userLabel = game.add.bitmapText(Platformer["lobby"].game.width/2, 150, 'font', userText, 25);
+
     userLabel.anchor.setTo( 0.5, 0.5 );
     Platformer["lobby"].textOnScreen[0] = userLabel;
 
@@ -103,9 +98,7 @@ var updateUsersInRoom = function() {
     //ADD EACH OF THE USERS TO THE LIST
     var k = 1;
     for(var i = 0; i < Platformer["lobby"].lobbyUsers.length; ++i) {
-        Platformer["lobby"].textOnScreen[k] = Platformer["lobby"].game.add.text(Platformer["lobby"].game.width/2, 180  + (i*15), Platformer["lobby"].lobbyUsers[i].name, Platformer["lobby"].style);    //puts the label in the center of the button
-        Platformer["lobby"].textOnScreen[k].stroke = '#000000';
-        Platformer["lobby"].textOnScreen[k].strokeThickness = 4;
+        Platformer["lobby"].textOnScreen[k] = game.add.bitmapText(Platformer["lobby"].game.width/2, 180  + (i*15), 'font', Platformer["lobby"].lobbyUsers[i].name, 15); //puts the label in the center of the button
         Platformer["lobby"].textOnScreen[k].anchor.setTo( 0.5, 0.5 );
         ++k
     }
@@ -122,3 +115,15 @@ var joinGame = function() {
     this.game.state.start("BootState", true, false, "assets/levels/level1.json");
 
 };
+
+
+var backButtonLobbyState = function() {
+    this.backButton = new LabelButton(this.game, 75, 25, "blueButton", 'EXIT LOBBY',  returnToMenuFromLobbyState, this, 1, 0, 0, 0, 70); // button frames 1=over, 0=off, 2=down
+    this.backButton.scale.setTo(.20, .20);
+}
+var returnToMenuFromLobbyState = function() {
+    console.log("In LobbyState");
+    Platformer["joinLobby"].joined = false;
+    Connection['socket'].emit('playerLeaveLobby');
+    Platformer["lobby"].game.state.start("MenuState", false, false);
+}
