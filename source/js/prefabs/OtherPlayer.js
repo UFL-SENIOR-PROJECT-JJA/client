@@ -14,7 +14,7 @@ Platformer.OtherPlayer = function (game_state, position, properties, name) {
     this.lives = 3;
 
     this.game_state.game.physics.arcade.enable(this);
-    this.body.gravity.y = 0;
+    this.body.gravity.y = -1000;
 
     this.body.immovable = true;
     //  this.body.collideWorldBounds = true;
