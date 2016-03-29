@@ -11,6 +11,8 @@ Platformer.prototype.constructor = Platformer.LobbyState;
 
 Platformer.LobbyState.prototype.init = function (data) {
     "use strict";
+    Platformer["joinLobby"] = this
+    Platformer["joinLobby"].joined = true;
     Platformer["lobby"] = this;
     //Connection['socket'].emit('requestForLobbies');
     Connection['socket'].on('lobby', function(lobbies){
