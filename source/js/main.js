@@ -14,6 +14,7 @@ game.state.add("ConnectionState", new Connection.Socket());
 game.state.add("MenuState", new Platformer.MenuState());
 game.state.add("CreateGameState", new Platformer.CreateGameState());
 game.state.add("JoinGameState", new Platformer.JoinGameState());
+game.state.add("GameOverState", new Platformer.GameOverState());
 
 //LobbyState
 game.state.add("LobbyState", new Platformer.LobbyState());
@@ -26,5 +27,6 @@ game.state.add("LobbyState", new Platformer.LobbyState());
 game.state.add("BootState", new Platformer.BootState());
 game.state.add("LoadingState", new Platformer.LoadingState());
 game.state.add("GameState", new Platformer.TiledState());
+
 game.state.start("InitalState", true, false);
 //"assets/levels/level1.json"

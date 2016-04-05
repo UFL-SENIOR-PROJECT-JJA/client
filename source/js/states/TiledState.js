@@ -215,6 +215,10 @@ Platformer.TiledState.prototype.getOnlinePlayers = function (tilemap) {
         delete prefabs[data.name];
 
     });
+
+    Connection['socket'].on('gameOver', function(){
+      game.state.start("GameOverState", true, false);
+    })
 };
 
 
