@@ -12,7 +12,7 @@ Platformer.prototype.constructor = Platformer.JoinGameState;
 Platformer.JoinGameState.prototype.init = function () {
     "use strict";
     this.buttons = [];
-    
+
     Platformer['joinButtons'] = this;
     this.startListening();
 };
@@ -54,10 +54,14 @@ var reloadLobbies = function(lobbies){
     Platformer['joinButtons'].buttons = [];
     var btnScale = .30;
     for(var i = 0; i < lobbies.length; ++i) {
-            var button = makeLobbyButton(lobbies[i]);
-            button.buttonObject = new LabelButton(this.game,this.game.width/2, this.game.height/3  + (i*60), "blueButton", lobbies[i].lobbyName,  button.buttonFunction, this, 1, 0, 0, 0, 75); // button frames 1=over, 0=off, 2=down
-            button.buttonObject.scale.setTo(btnScale, btnScale);
-            Platformer['joinButtons'].buttons.push(button);
+        if(lobbies[i].started) {
+            console.log("lobby started");
+            return;
+        }
+        var button = makeLobbyButton(lobbies[i]);
+        button.buttonObject = new LabelButton(this.game,this.game.width/2, this.game.height/3  + (i*60), "blueButton", lobbies[i].lobbyName,  button.buttonFunction, this, 1, 0, 0, 0, 75); // button frames 1=over, 0=off, 2=down
+        button.buttonObject.scale.setTo(btnScale, btnScale);
+        Platformer['joinButtons'].buttons.push(button);
     }
 
 };
@@ -66,6 +70,7 @@ var joinLobbyState = function (data) {
         console.log("joinLobbyState Method");
         console.log(data);
         Platformer["joinLobby"].joined = true;
+        Connection['socket'].removeListener('updatedLobbies');
         Platformer["joinLobby"].game.state.start("LobbyState", true, false, data);
 };
 
@@ -91,5 +96,6 @@ var backButtonJoinGameState = function() {
     this.backButton.scale.setTo(.20, .20);
 }
 var returnToMenuFromJoinGameState = function() {
+    Connection['socket'].removeListener('updatedLobbies');
     Platformer["joinLobby"].game.state.start("MenuState", true, false);
 }

@@ -24,6 +24,7 @@ Connection.Socket.prototype.preload = function () {
   console.log("Connection Created");
   this.socket = io('http://192.168.0.23:3000');
 
+
   console.log(this.socket.id);
   Connection.socket = this.socket;
   this.socket.name = username;
